@@ -46,6 +46,23 @@ class Post(models.Model):
         Tags, blank=True, verbose_name="Тэги", related_name="tags"
     )
 
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            # Базовый slug из заголовка
+            base_slug = slugify(self.title)
+            slug = base_slug
+            counter = 1
+
+            # Проверяем, есть ли уже такой slug
+            while Post.objects.filter(slug=slug).exists():
+                slug = f"{base_slug}-{counter}"
+                counter += 1
+
+            self.slug = slug
+
+        super().save(*args, **kwargs)
+
+
     class Meta:
         ordering = ["-created_at"]  # Сортировка по умолчанию (новые сверху)
         verbose_name = "Пост"
@@ -58,19 +75,3 @@ class Post(models.Model):
     def __str__(self):
         return self.title
 
-
-def save(self, *args, **kwargs):
-    if not self.slug:
-        # Базовый slug из заголовка
-        base_slug = slugify(self.title)
-        slug = base_slug
-        counter = 1
-
-        # Проверяем, есть ли уже такой slug
-        while Post.objects.filter(slug=slug).exists():
-            slug = f"{base_slug}-{counter}"
-            counter += 1
-
-        self.slug = slug
-
-    super().save(*args, **kwargs)

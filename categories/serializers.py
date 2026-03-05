@@ -7,4 +7,4 @@ class CategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = Category
         fields = ["id", "name", "slug", "created_at"]
-        read_only_fields = ["id", "created_at"]  # эти поля нельзя менять через API
+        read_only_fields = ["id", "slug", "created_at"]  # эти поля нельзя менять через API

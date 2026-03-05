@@ -3,7 +3,7 @@ from django.utils.text import slugify
 
 
 class Category(models.Model):
-    name = models.TextField(
+    name = models.CharField(
         verbose_name="Название",  # не "Содержание" для категории
         max_length=200,
         unique=True,

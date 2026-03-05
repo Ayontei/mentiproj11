@@ -8,7 +8,7 @@ from .serializers import TagSerializer
 @api_view(["GET", "POST"])
 def tags_list(request):
     if request.method == "GET":
-        tags = Tags.objects.values_list("name", flat=True)
+        tags = Tags.objects.all().order_by("name")
         serializer = TagSerializer(tags, many=True)
         return Response(serializer.data)
 

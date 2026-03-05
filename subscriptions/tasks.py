@@ -3,15 +3,20 @@ from django.contrib.auth.models import User
 from django.core.mail import send_mail
 from .models import Sub
 import logging
+from ment import settings
 
 logger = logging.getLogger(__name__)
 
 
-@shared_task
+@shared_task(
+    bind=True,
+    max_retries=5,
+    default_retry_delay=20, 
+    autoretry_for=(Exception,), 
+    retry_backoff=False,
+)
 def notify_subscribers(author_id, post_title, post_id):
-    """
-    Отправляет уведомления всем подписчикам автора о новом посте
-    """
+    post_url = f"{settings.SITE_URL}/posts/{post_id}/"
     try:
         author = User.objects.get(id=author_id)
         subscribers = Sub.objects.filter(
@@ -31,12 +36,12 @@ def notify_subscribers(author_id, post_title, post_id):
             subject=f"Новый пост от {author.username}",
             message=(
                 f'Пользователь {author.username} опубликовал новый пост: "{post_title}"\n\n'
-                f"Ссылка: http://127.0.0.1/posts/{post_id}/"
+                f"Ссылка: {post_url}"
             ),
             from_email="noreply@your-site.com",
             recipient_list=subscriber_emails,
             fail_silently=False,
-        )
+            )
 
         logger.info(
             f"Notified {len(subscriber_emails)} subscribers about post {post_id}"

@@ -23,11 +23,13 @@ dependencies = [
     "django-filter (>=25.2,<26.0)",
     "pytest-django (>=4.12.0,<5.0.0)",
     "pytest-cov (>=7.0.0,<8.0.0)",
-    "model-bakery (>=1.23.3,<2.0.0)"
+    "model-bakery (>=1.23.3,<2.0.0)",
+    "python-decouple (>=3.8,<4.0)"
 ]
 
 [tool.poetry]
 packages = [{include = "mentproj", from = "src"}]
+package-mode = false
 
 [build-system]
 requires = ["poetry-core>=2.0.0,<3.0.0"]

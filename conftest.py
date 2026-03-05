@@ -13,7 +13,7 @@ def api_client():
 @pytest.fixture
 def user(db):
     """Создание обычного пользователя"""
-    return baker.make(User, username="testuser", email="test@example.com")
+    return baker.make(User, username="testuser", email="test@example.com", password='12345678')
 
 
 @pytest.fixture

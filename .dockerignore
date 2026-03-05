@@ -5,6 +5,7 @@
 .ruff_cache
 
 # Virtual Environment
+.venv
 .env
 .env/
 .env/*

@@ -20,7 +20,7 @@ class PostPagination(PageNumberPagination):
 def post_list(request):
     if request.method == "GET":
         # Базовый queryset (только опубликованные посты)
-        posts = Post.objects.filter(is_published=True)
+        posts = Post.objects.select_related(is_published=True)
 
         search = request.GET.get("search")
         if search:
@@ -34,7 +34,7 @@ def post_list(request):
 
         tag_id = request.GET.get("tag")
         if tag_id:
-            posts = posts.filter(tags__id=tag_id)
+            posts = posts.filter(tags__id=tag_id).distinct
 
         author_id = request.GET.get("author")
         if author_id:

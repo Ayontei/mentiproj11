@@ -30,4 +30,5 @@ class PostSerializer(serializers.ModelSerializer):
             "created_at",
             "updated_at",
             "author",
+            "slug",
         ]  # эти поля нельзя менять через API

@@ -9,7 +9,7 @@ from .serializers import CategorySerializer
 def category_list(request):
     if request.method == "GET":
         category = Category.objects.values_list("name", flat=True)
-        # serializer = CategorySerializer(category, many=True)
+        serializer = CategorySerializer(category, many=True)
         return Response(list(category))
 
     elif request.method == "POST":

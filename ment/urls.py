@@ -30,7 +30,7 @@ urlpatterns = [
     path("posts/", include(posts.urls)),
     path("categories/", include(categories.urls)),
     path("tags/", include(tags.urls)),
-    path("subscriptions", include(subscriptions.urls)),
+    path("subscriptions/", include(subscriptions.urls)),
     re_path(
         r"^swagger(?P<format>\.json|\.yaml)$",
         schema_view.without_ui(cache_timeout=0),
